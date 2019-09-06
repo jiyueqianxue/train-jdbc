@@ -1,4 +1,4 @@
-package io.mine.ft.train.conf.filter;
+package io.mine.ft.train.conf.intercept;
 
 import java.util.Properties;
 

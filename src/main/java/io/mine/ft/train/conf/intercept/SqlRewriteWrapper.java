@@ -1,4 +1,4 @@
-package io.mine.ft.train.conf.filter;
+package io.mine.ft.train.conf.intercept;
 
 import io.mine.ft.train.common.exception.BusinessException;
 import net.sf.jsqlparser.expression.Alias;
