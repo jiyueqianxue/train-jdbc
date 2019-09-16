@@ -44,14 +44,12 @@ public class ShopSupport {
 		
 		shopBaseBiz.updateShopTitle_1(502L, "2222+1");
 		
-		try {
-			shopBaseBiz.updateShopTitle_2(503L, "3333+1");
-		} catch (Exception e) {
-			
-		}
-		
-		shopBaseBiz.updateShopTitle_3(504L, "4444+1");
-		
-		
+//		try {
+//			shopBaseBiz.updateShopTitle_2(503L, "3333+1");
+//		} catch (Exception e) {
+//			
+//		}
+//		
+//		shopBaseBiz.updateShopTitle_3(504L, "4444+1");
 	}
 }

@@ -2,10 +2,7 @@ package io.mine.ft.train.service.biz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import io.mine.ft.train.common.enums.ResultCodeEnum;
 import io.mine.ft.train.common.exception.BusinessException;
 import io.mine.ft.train.dao.bean.product.ProductBasePO;
 import io.mine.ft.train.dao.mapper.product.ProductBasePOMapper;

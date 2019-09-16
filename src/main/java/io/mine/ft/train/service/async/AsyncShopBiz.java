@@ -13,11 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 public class AsyncShopBiz {
 	
 	@Autowired
-	private ShopBaseBiz shopBiz;
+	private ShopBaseBiz shopBaseBiz;
 	
 	@Async
 	public ProductBasePO getShopBase (Long id) {
-		ProductBasePO productBasePO = shopBiz.getShopBase(id);
+		ProductBasePO productBasePO = shopBaseBiz.getShopBase(id);
 		
 		log.info("@Async 异步查询商品详情：--{}", productBasePO);
 		return productBasePO;
