@@ -18,6 +18,7 @@ import io.mine.ft.train.common.utils.ReflectHelper;
                 java.sql.Connection.class, Integer.class})})
 public class SqlRewriteInterceptor implements Interceptor {
     
+	@Override
     public Object intercept(Invocation invocation) throws Throwable {
         //        log.info("intercept==>" + invocation.getClass().getName() + ":" + invocation.getMethod() + ":" + invocation.getArgs());
 
@@ -38,14 +39,16 @@ public class SqlRewriteInterceptor implements Interceptor {
 
         return invocation.proceed();
     }
-
+    
+    @Override
     public Object plugin(Object target) {
         //log.info("==>" + target.getClass().getName());
         if ((target instanceof StatementHandler))
             return Plugin.wrap(target, this);
         return target;
     }
-
+    
+    @Override
     public void setProperties(Properties properties) {
     }
 }
