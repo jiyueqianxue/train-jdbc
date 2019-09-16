@@ -9,11 +9,11 @@
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
 		<!-- 生成注释插件 -->
-		<plugin type="io.mine.ft.train.utils.generator.plugin.CommentPlugin" />
+		<plugin type="online.zhuchuang.ft.business.utils.generator.plugin.CommentPlugin" />
 		<!-- 分页插件 -->
-		<plugin type="io.mine.ft.train.utils.generator.plugin.PaginationMysqlPlugin" />
+		<plugin type="online.zhuchuang.ft.business.utils.generator.plugin.PaginationMysqlPlugin" />
 		<!-- 批量插入插件 -->
-		<plugin type="io.mine.ft.train.utils.generator.plugin.InsertBatchPlugin" />
+		<plugin type="online.zhuchuang.ft.business.utils.generator.plugin.InsertBatchPlugin" />
 
 		<commentGenerator>
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -22,11 +22,11 @@
 
 		<!-- 数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://47.104.5.219:3306/xzz_server"
-			userId="root" password="xzz521sql" />
+			connectionURL="jdbc:mysql://47.104.5.219:3306/wtozz-web"
+			userId="wtozz" password="wtozz@123" />
 
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="io.mine.ft.train.dao.bean.audit"
+		<javaModelGenerator targetPackage="online.zhuchuang.ft.business.dao.bean.module"
 			targetProject="src/main/java">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="true" />
@@ -35,25 +35,34 @@
 		</javaModelGenerator>
 
 		<!-- 生成的映射文件包名和位置 -->
-		<sqlMapGenerator targetPackage="dal.dao.mapper.audit"
+		<sqlMapGenerator targetPackage="dal.dao.mapper.module"
 			targetProject="src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator targetPackage="io.mine.ft.train.dao.mapper.audit"
+		<javaClientGenerator targetPackage="online.zhuchuang.ft.business.dao.mapper.module"
 			targetProject="src/main/java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
-
-		<table tableName="user_base" domainObjectName="UserBasePO"
+		
+		<table tableName="page_module" domainObjectName="PageModulePO"
 			enableCountByExample="true" enableUpdateByExample="true"
 			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="true">
 			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
-			<columnOverride column="gender" javaType="java.lang.Byte" />
-			<columnOverride column="create_time" javaType="java.sql.Timestamp" />
-			<columnOverride column="update_time" javaType="java.sql.Timestamp" />
+			<columnOverride column="module_type" javaType="java.lang.Byte" />
+			<columnOverride column="create_time" javaType="java.util.Date" />
+			<columnOverride column="update_time" javaType="java.util.Date" />
+		</table>
+		
+		<table tableName="module_element" domainObjectName="ModuleElementPO"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.util.Date" />
+			<columnOverride column="update_time" javaType="java.util.Date" />
 		</table>
 	</context>
 </generatorConfiguration>

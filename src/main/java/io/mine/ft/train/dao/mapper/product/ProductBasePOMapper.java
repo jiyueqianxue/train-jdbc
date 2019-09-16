@@ -1,7 +1,7 @@
-package io.mine.ft.train.dao.mapper.audit;
+package io.mine.ft.train.dao.mapper.product;
 
-import io.mine.ft.train.dao.bean.audit.ProductBasePO;
-import io.mine.ft.train.dao.bean.audit.ProductBasePOExample;
+import io.mine.ft.train.dao.bean.product.ProductBasePO;
+import io.mine.ft.train.dao.bean.product.ProductBasePOExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="io.mine.ft.train.dao.mapper.audit.ProductOrderPOMapper" >
-  <resultMap id="BaseResultMap" type="io.mine.ft.train.dao.bean.audit.ProductOrderPO" >
+<mapper namespace="io.mine.ft.train.dao.mapper.product.ProductCategoryPOMapper" >
+  <resultMap id="BaseResultMap" type="io.mine.ft.train.dao.bean.product.ProductCategoryPO" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
-    <result column="order_type" property="orderType" jdbcType="TINYINT" />
-    <result column="amount" property="amount" jdbcType="DECIMAL" />
-    <result column="order_status" property="orderStatus" jdbcType="TINYINT" />
+    <result column="level" property="level" jdbcType="TINYINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="font_style" property="fontStyle" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="product_id" property="productId" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_deleted" property="isDeleted" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,17 +72,17 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, order_no, order_type, amount, order_status, product_id, user_id, create_time, 
-    update_time
+    id, level, category_name, link, font_style, parent_id, product_id, create_time, update_time, 
+    is_deleted
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPOExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPOExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from product_order
+    from product_category
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,53 +96,55 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from product_order
+    from product_category
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from product_order
+    delete from product_category
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPOExample" >
-    delete from product_order
+  <delete id="deleteByExample" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPOExample" >
+    delete from product_category
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPO" >
+  <insert id="insert" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPO" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into product_order (order_no, order_type, amount, 
-      order_status, product_id, user_id, 
-      create_time, update_time)
-    values (#{orderNo,jdbcType=VARCHAR}, #{orderType,jdbcType=TINYINT}, #{amount,jdbcType=DECIMAL}, 
-      #{orderStatus,jdbcType=TINYINT}, #{productId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into product_category (level, category_name, link, 
+      font_style, parent_id, product_id, 
+      create_time, update_time, is_deleted
+      )
+    values (#{level,jdbcType=TINYINT}, #{categoryName,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
+      #{fontStyle,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=CHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPO" >
+  <insert id="insertSelective" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPO" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into product_order
+    insert into product_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="orderNo != null" >
-        order_no,
+      <if test="level != null" >
+        level,
       </if>
-      <if test="orderType != null" >
-        order_type,
+      <if test="categoryName != null" >
+        category_name,
       </if>
-      <if test="amount != null" >
-        amount,
+      <if test="link != null" >
+        link,
       </if>
-      <if test="orderStatus != null" >
-        order_status,
+      <if test="fontStyle != null" >
+        font_style,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="productId != null" >
         product_id,
-      </if>
-      <if test="userId != null" >
-        user_id,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -149,25 +152,28 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="orderNo != null" >
-        #{orderNo,jdbcType=VARCHAR},
+      <if test="level != null" >
+        #{level,jdbcType=TINYINT},
       </if>
-      <if test="orderType != null" >
-        #{orderType,jdbcType=TINYINT},
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
       </if>
-      <if test="amount != null" >
-        #{amount,jdbcType=DECIMAL},
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
       </if>
-      <if test="orderStatus != null" >
-        #{orderStatus,jdbcType=TINYINT},
+      <if test="fontStyle != null" >
+        #{fontStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
       </if>
       <if test="productId != null" >
         #{productId,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -175,37 +181,40 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=CHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPOExample" resultType="java.lang.Integer" >
-    select count(*) from product_order
+  <select id="countByExample" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPOExample" resultType="java.lang.Integer" >
+    select count(*) from product_category
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update product_order
+    update product_category
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.orderNo != null" >
-        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=TINYINT},
       </if>
-      <if test="record.orderType != null" >
-        order_type = #{record.orderType,jdbcType=TINYINT},
+      <if test="record.categoryName != null" >
+        category_name = #{record.categoryName,jdbcType=VARCHAR},
       </if>
-      <if test="record.amount != null" >
-        amount = #{record.amount,jdbcType=DECIMAL},
+      <if test="record.link != null" >
+        link = #{record.link,jdbcType=VARCHAR},
       </if>
-      <if test="record.orderStatus != null" >
-        order_status = #{record.orderStatus,jdbcType=TINYINT},
+      <if test="record.fontStyle != null" >
+        font_style = #{record.fontStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
       </if>
       <if test="record.productId != null" >
         product_id = #{record.productId,jdbcType=BIGINT},
-      </if>
-      <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=BIGINT},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -213,46 +222,50 @@
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update product_order
+    update product_category
     set id = #{record.id,jdbcType=BIGINT},
-      order_no = #{record.orderNo,jdbcType=VARCHAR},
-      order_type = #{record.orderType,jdbcType=TINYINT},
-      amount = #{record.amount,jdbcType=DECIMAL},
-      order_status = #{record.orderStatus,jdbcType=TINYINT},
+      level = #{record.level,jdbcType=TINYINT},
+      category_name = #{record.categoryName,jdbcType=VARCHAR},
+      link = #{record.link,jdbcType=VARCHAR},
+      font_style = #{record.fontStyle,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
       product_id = #{record.productId,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPO" >
-    update product_order
+  <update id="updateByPrimaryKeySelective" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPO" >
+    update product_category
     <set >
-      <if test="orderNo != null" >
-        order_no = #{orderNo,jdbcType=VARCHAR},
+      <if test="level != null" >
+        level = #{level,jdbcType=TINYINT},
       </if>
-      <if test="orderType != null" >
-        order_type = #{orderType,jdbcType=TINYINT},
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
       </if>
-      <if test="amount != null" >
-        amount = #{amount,jdbcType=DECIMAL},
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
       </if>
-      <if test="orderStatus != null" >
-        order_status = #{orderStatus,jdbcType=TINYINT},
+      <if test="fontStyle != null" >
+        font_style = #{fontStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
       </if>
       <if test="productId != null" >
         product_id = #{productId,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -260,22 +273,26 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="io.mine.ft.train.dao.bean.audit.ProductOrderPO" >
-    update product_order
-    set order_no = #{orderNo,jdbcType=VARCHAR},
-      order_type = #{orderType,jdbcType=TINYINT},
-      amount = #{amount,jdbcType=DECIMAL},
-      order_status = #{orderStatus,jdbcType=TINYINT},
+  <update id="updateByPrimaryKey" parameterType="io.mine.ft.train.dao.bean.product.ProductCategoryPO" >
+    update product_category
+    set level = #{level,jdbcType=TINYINT},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      font_style = #{fontStyle,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
       product_id = #{productId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=CHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <insert id="insertBatch" parameterType="java.util.List" >
-    insert into product_order (id,order_no,order_type,amount,order_status,product_id,user_id,create_time,update_time) values  <foreach collection="records" item="item" index="index" separator=","> ( #{item.id,jdbcType=BIGINT},#{item.orderNo,jdbcType=VARCHAR},#{item.orderType,jdbcType=TINYINT},#{item.amount,jdbcType=DECIMAL},#{item.orderStatus,jdbcType=TINYINT},#{item.productId,jdbcType=BIGINT},#{item.userId,jdbcType=BIGINT},#{item.createTime,jdbcType=TIMESTAMP},#{item.updateTime,jdbcType=TIMESTAMP} )  </foreach>
+    insert into product_category (id,level,category_name,link,font_style,parent_id,product_id,create_time,update_time,is_deleted) values  <foreach collection="records" item="item" index="index" separator=","> ( #{item.id,jdbcType=BIGINT},#{item.level,jdbcType=TINYINT},#{item.categoryName,jdbcType=VARCHAR},#{item.link,jdbcType=VARCHAR},#{item.fontStyle,jdbcType=VARCHAR},#{item.parentId,jdbcType=BIGINT},#{item.productId,jdbcType=BIGINT},#{item.createTime,jdbcType=TIMESTAMP},#{item.updateTime,jdbcType=TIMESTAMP},#{item.isDeleted,jdbcType=CHAR} )  </foreach>
   </insert>
 </mapper>

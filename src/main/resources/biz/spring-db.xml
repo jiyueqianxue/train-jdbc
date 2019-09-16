@@ -7,7 +7,12 @@
            http://www.springframework.org/schema/tx       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
        ">
 
-	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	<!-- <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		
+	</bean> -->
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
 		<property name="poolName" value="xzz_server" />
 		<property name="connectionTestQuery" value="SELECT 1" />
 		<property name="driverClassName" value="${jdbc.driver}" />
@@ -30,11 +35,6 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
-		<constructor-arg ref="hikariConfig" />
-	</bean>
-
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations">
@@ -43,8 +43,6 @@
 				<value>classpath*:dal/dao/mapper/*/custom/*.xml</value>
 			</array>
 		</property>
-		<!-- <property name="plugins"> <array> <bean class="io.ft.tenantId.interceptor.orm.TenantIdOrmInterceptor" 
-			/> </array> </property> -->
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

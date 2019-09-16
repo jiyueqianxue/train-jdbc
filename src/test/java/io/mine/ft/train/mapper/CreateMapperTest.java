@@ -14,10 +14,8 @@ public class CreateMapperTest {
      */
 	public static void main(String[] args) throws Throwable {
 		MybatisGeneratorUtil.generate(
-				//"dbd_info.xml"
-				//"yp_base.xml"
-				//"file_info.xml"
-				"product_base.xml"
+				
+				"product_category.xml"
 		);
 	}
 }

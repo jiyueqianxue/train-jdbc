@@ -1,4 +1,4 @@
-package io.mine.ft.train.biz.async;
+package io.mine.ft.train.service.async;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

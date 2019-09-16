@@ -1,9 +1,9 @@
 jdbc: 
   driver: com.mysql.jdbc.Driver
-  url: jdbc:mysql://47.104.5.219:3306/xzz_server?useUnicode:true&characterEncoding:UTF-8
-  username: root
-  password: xzz521sql
+  url: jdbc:mysql://47.104.5.219:3306/wtozz-web?useUnicode:true&characterEncoding:UTF-8
+  username: wtozz
+  password: wtozz@123
   connectionTimeout: 60000
 
 log:
-  dir: /home/logs/train_ssm
+  dir: /home/logs/train_jdbc

@@ -1,12 +1,13 @@
-package io.mine.ft.train.biz.async;
+package io.mine.ft.train.service.async;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import io.mine.ft.train.biz.ShopBiz;
-import io.mine.ft.train.dao.bean.audit.ProductBasePO;
+import io.mine.ft.train.dao.bean.product.ProductBasePO;
+import io.mine.ft.train.service.biz.ShopBaseBiz;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Component("shopRunnable")
 @Scope(value = "prototype")
@@ -14,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ShopRunnable implements Runnable {
 	
 	@Autowired
-	private ShopBiz shopBiz;
+	private ShopBaseBiz shopBiz;
 	
 	private Long shopId;
 	

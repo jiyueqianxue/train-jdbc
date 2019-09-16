@@ -47,7 +47,7 @@
 		</property>
 	</bean>
 	
-	<bean id="dataSource_1" class="com.zaxxer.hikari.HikariDataSource"
+	<bean id="dataSource_2" class="com.zaxxer.hikari.HikariDataSource"
 		destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
@@ -55,13 +55,17 @@
 		<property name="poolName" value="xzz_server" />
 		<property name="connectionTestQuery" value="SELECT 1" />
 		<property name="driverClassName" value="${jdbc.driver}" />
+		<!-- 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
 		<property name="connectionTimeout" value="${jdbc.connectionTimeout}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="password" value="${jdbc.password}" />
 		<property name="username" value="${jdbc.username}" />
+		<!-- 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
 		<property name="idleTimeout" value="600000" />
 		<property name="maximumPoolSize" value="30" />
 		<property name="minimumIdle" value="20" />
+		<!-- 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL 
+            wait_timeout参数（show variables like '%timeout%';） -->
 		<property name="maxLifetime" value="1800000" />
 		<property name="validationTimeout" value="30000" />
 		<property name="dataSourceProperties">
@@ -73,6 +77,41 @@
 			</props>
 		</property>
 	</bean>
+
+    <bean id="shareSourceRead" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="${share.r.url}" />
+        <property name="username" value="${share.r.username}" />
+        <property name="password" value="${share.r.password}" />
+        <!-- initialSize: 初始化连接 -->
+        <property name="initialSize" value="${jdbc.db.initialSize}" />
+        <!-- maxActive: 最大连接数量 -->
+        <property name="maxActive" value="${jdbc.db.maxActive}" />
+        <!-- minIdle: 最小空闲连接 -->
+        <property name="minIdle" value="${jdbc.db.minIdle}" />
+        <!-- 被丢弃的数据库连接是否做记录 -->
+        <property name="logAbandoned" value="${jdbc.db.logAbandoned}"/>
+        <!-- 是否自动回收超时连接 -->
+        <property name="removeAbandoned" value="${jdbc.db.removeAbandoned}" />
+        <!-- 泄露的连接可以被删除的超时值, 单位秒 -->
+        <property name="removeAbandonedTimeout" value="${jdbc.db.removeAbandonedTimeout}" />
+        <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+        <property name="maxWait" value="${jdbc.db.maxWait}" />
+        <!-- 指明是否在从池中取出连接前进行检验，如果检验失败，则从池中去除连接并尝试取出另一个。注意: 设置为true后如果要生效，validationQuery参数必须设置为非空字符串 -->
+        <property name="testOnBorrow" value="${jdbc.db.testOnBorrow}" />
+        <!-- SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前.如果指定,则查询必须是一个SQL SELECT并且必须返回至少一行记录 -->
+        <property name="validationQuery" value="SELECT 1" />
+        <!-- 指明连接是否被空闲连接回收器(如果有)进行检验。如果检测失败，则连接将被从池中去除。 -->
+        <property name="testWhileIdle" value="${jdbc.db.testWhileIdle}" />
+        <!-- 在空闲连接回收器线程运行期间休眠的时间值，以毫秒为单位 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.db.timeBetweenEvictionRunsMillis}" />
+        <!-- 连接在池中保持空闲而不被空闲连接回收器线程，回收的最小时间值，单位毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.db.minEvictableIdleTimeMillis}" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat" />
+        <!-- druid连接属性配置 -->
+        <property name="connectionProperties" value="druid.stat.slowSqlMillis=100"/>
+    </bean>
 	
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
