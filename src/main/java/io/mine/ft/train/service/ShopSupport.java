@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.mine.ft.train.service.biz.ShopBaseBiz;
-import io.mine.ft.train.service.biz.ShopCategoryBiz;
-import lombok.extern.slf4j.Slf4j;
+//import io.mine.ft.train.service.biz.ShopCategoryBiz;
+//import lombok.extern.slf4j.Slf4j;
 /**
   	TransactionDefinition.PROPAGATION_REQUIRED：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。这是默认值。
   	TransactionDefinition.PROPAGATION_REQUIRES_NEW：创建一个新的事务，如果当前存在事务，则把当前事务挂起。
@@ -30,13 +30,13 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Service
-@Slf4j
+//@Slf4j
 public class ShopSupport {
 	
 	@Autowired
 	private ShopBaseBiz shopBaseBiz;
-	@Autowired
-	private ShopCategoryBiz shopCategoryBiz;
+	//@Autowired
+	//private ShopCategoryBiz shopCategoryBiz;
 	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void update_1() throws Exception {
