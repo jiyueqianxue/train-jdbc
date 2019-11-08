@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.mine.ft.train.service.biz.ShopBaseBiz;
-import sun.awt.Mutex;
 //import io.mine.ft.train.service.biz.ShopCategoryBiz;
 //import lombok.extern.slf4j.Slf4j;
 /**
@@ -44,9 +43,6 @@ public class ShopSupport {
 		
 		
 		shopBaseBiz.updateShopTitle_1(502L, "2222+1");
-		
-		Mutex mutex = new Mutex();
-		mutex.lock();
 		
 //		try {
 //			shopBaseBiz.updateShopTitle_2(503L, "3333+1");

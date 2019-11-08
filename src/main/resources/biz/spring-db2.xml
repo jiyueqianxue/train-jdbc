@@ -31,7 +31,7 @@
 					</property>
 				</bean>
 				<bean
-					class="io.mine.ft.train.conf.filter.SqlRewriteInterceptor"></bean>
+					class="io.mine.ft.train.conf.intercept.SqlRewriteInterceptor"></bean>
 			</array>
 		</property>
 	</bean>
