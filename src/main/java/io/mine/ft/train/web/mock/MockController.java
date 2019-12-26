@@ -15,7 +15,11 @@ import com.alibaba.fastjson.JSONObject;
 
 import io.mine.ft.train.common.enums.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * Spring动态 注入/删除 Bean:https://blog.csdn.net/m0_37556444/article/details/84876063
+ * @author machao
+ *
+ */
 @Slf4j
 @RestController
 @RequestMapping(value = "/mock/")
