@@ -57,7 +57,7 @@
 						</value>
 					</property>
 				</bean> -->
-				<!-- <bean class="io.zhongan.xdy4.cat.mybatis.CatMyBatisV340Plugin"></bean> -->
+				<!-- <bean class="io.mac.xdy4.cat.mybatis.CatMyBatisV340Plugin"></bean> -->
 				<bean class="io.mine.ft.train.conf.intercept.SqlRewriteInterceptor"></bean>
 			</array>
 		</property>
